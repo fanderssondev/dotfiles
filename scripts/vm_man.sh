@@ -8,7 +8,7 @@ RED="\e[31m"
 RESET="\e[0m"
 
 # Define the list of all VMs
-ALL_VMS=("rocky8a" "rocky8b" "rocky8c")
+ALL_VMS=("rocky8a" "rocky8b" "rocky8c" "ubuntu24a")
 
 # Check if at least two arguments are provided
 if [ $# -lt 2 ]; then
