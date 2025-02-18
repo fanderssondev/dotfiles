@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This is is made to be able to start/stop Virtualbox, and to be able to start/stop vm's in headless mode
+# This script starts/stops VirtualBox VMs in headless mode from WSL2.
 
 # Define colors
 GREEN="\e[32m"
@@ -26,28 +26,47 @@ else
     VMS_TO_PROCESS=("$@")
 fi
 
+# Convert Windows path using wslpath (handles spaces properly)
+VBOXMANAGE=$(wslpath "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe")
+
+# Verify that VBoxManage.exe exists
+if [ ! -f "$VBOXMANAGE" ]; then
+    echo -e "${RED}Error: VBoxManage.exe not found at $VBOXMANAGE. Ensure VirtualBox is installed on Windows.${RESET}"
+    exit 1
+fi
+
+# Check if running inside WSL2
+if ! grep -qi microsoft /proc/version; then
+    echo -e "${RED}This script is designed to run in WSL2.${RESET}"
+    exit 1
+fi
+
 # Function to start VirtualBox if needed
 start_virtualbox() {
-    if ! pgrep -x "VirtualBox" > /dev/null; then
+    if ! pgrep -f "VirtualBox.exe" > /dev/null; then
         echo "Starting VirtualBox..."
-        VirtualBox &  # Start VirtualBox in the background
+        powershell.exe -Command "Start-Process 'C:\\Program Files\\Oracle\\VirtualBox\\VirtualBox.exe' -WindowStyle Minimized"
         sleep 3  # Give it time to open
-
-        # Minimize VirtualBox window
-        xdotool search --name "Oracle VM VirtualBox Manager" windowminimize
     fi
 }
 
 # Function to shut down VirtualBox if no VMs are running
 shutdown_virtualbox() {
     echo "Checking if all VMs are shut down..."
-    while VBoxManage list runningvms | grep -q '"'; do
+    while "$VBOXMANAGE" list runningvms | grep -q '"'; do
         echo "Waiting for VMs to shut down..."
         sleep 2  # Wait for VMs to power off completely
     done
 
-    echo "No VMs are running. Shutting down VirtualBox..."
-    pkill VirtualBox
+    echo "No VMs are running. Shutting down VirtualBox GUI..."
+    
+    # Check if VirtualBox.exe is running before trying to stop it
+    if powershell.exe -Command "Get-Process -Name 'VirtualBox' -ErrorAction SilentlyContinue" | grep -q "VirtualBox"; then
+        powershell.exe -Command "Stop-Process -Name 'VirtualBox' -Force"
+        echo -e "${GREEN}VirtualBox has been closed.${RESET}"
+    else
+        echo -e "${RED}VirtualBox was not running.${RESET}"
+    fi
 }
 
 # Handle 'up' (start VMs)
@@ -57,7 +76,7 @@ if [ "$ACTION" == "up" ]; then
     for VM in "${VMS_TO_PROCESS[@]}"; do
         if [[ " ${ALL_VMS[*]} " =~ " ${VM} " ]]; then
             echo "Starting VM: $VM"
-            if VBoxManage startvm "$VM" --type headless >/dev/null 2>&1; then
+            if "$VBOXMANAGE" startvm "$VM" --type headless >/dev/null 2>&1; then
                 echo -e "${GREEN}VM \"$VM\" has been successfully started.${RESET}"
             else
                 echo -e "${RED}Failed to start VM \"$VM\". Check VirtualBox logs for details.${RESET}"
@@ -73,12 +92,28 @@ elif [ "$ACTION" == "down" ]; then
     for VM in "${VMS_TO_PROCESS[@]}"; do
         if [[ " ${ALL_VMS[*]} " =~ " ${VM} " ]]; then
             echo "Shutting down VM: $VM"
-            if VBoxManage controlvm "$VM" acpipowerbutton >/dev/null 2>&1; then
-                echo -e "${GREEN}VM \"$VM\" has been successfully sent a shutdown signal.${RESET}"
+
+            # Send ACPI shutdown signal
+            if "$VBOXMANAGE" controlvm "$VM" acpipowerbutton >/dev/null 2>&1; then
+                echo -e "${GREEN}VM \"$VM\" has been sent an ACPI shutdown signal.${RESET}"
             else
-                echo -e "${RED}Failed to shut down VM \"$VM\". It may already be off.${RESET}"
+                echo -e "${RED}Failed to send ACPI shutdown signal to VM \"$VM\".${RESET}"
             fi
-            sleep 2  # Small delay between shutting down VMs
+
+            # Wait for VM to power off (max 30 seconds)
+            COUNT=0
+            while "$VBOXMANAGE" list runningvms | grep -q "\"$VM\""; do
+                if [ $COUNT -ge 15 ]; then
+                    echo -e "${RED}VM \"$VM\" did not shut down in time. Forcing power off...${RESET}"
+                    "$VBOXMANAGE" controlvm "$VM" poweroff
+                    break
+                fi
+                echo "Waiting for VM \"$VM\" to shut down... ($COUNT/15)"
+                sleep 2
+                COUNT=$((COUNT+1))
+            done
+
+            echo -e "${GREEN}VM \"$VM\" is now off.${RESET}"
         else
             echo -e "${RED}Warning: VM '$VM' is not in the predefined list.${RESET}"
         fi
@@ -91,44 +126,3 @@ else
     exit 1
 fi
 
-
-# ====================================================================
-# ====================================================================
-
-# The following code needs to be added to /etc/bash_completion.d/vm-man for auto completion
-
-
-# #!/bin/bash
-# 
-# _vm_man_complete() {
-#     local cur prev opts vms choices
-#     cur="${COMP_WORDS[COMP_CWORD]}"
-#     prev="${COMP_WORDS[COMP_CWORD-1]}"
-# 
-#     # Define available commands
-#     opts="up down"
-# 
-#     # Extract VM names from ~/.ssh/config
-#     vms=$(grep -iE "^Host " ~/.ssh/config | awk '{print $2}' | tr '\n' ' ')
-# 
-#     # First argument should be "up" or "down"
-#     if [[ $COMP_CWORD -eq 1 ]]; then
-#         COMPREPLY=($(compgen -W "$opts" -- "$cur"))
-#         return
-#     fi
-# 
-#     # If "up" or "down" is already provided, suggest VMs (including "all")
-#     if [[ $COMP_CWORD -ge 2 ]]; then
-#         # Get already typed VMs
-#         local typed_vms="${COMP_WORDS[@]:1:$COMP_CWORD-1}"
-# 
-#         # Remove already typed VMs from the suggestion list
-#         choices=$(echo "$vms all" | tr ' ' '\n' | grep -vFxf <(echo "$typed_vms" | tr ' ' '\n'))
-# 
-#         COMPREPLY=($(compgen -W "$choices" -- "$cur"))
-#         return
-#     fi
-# }
-# 
-# # Register the completion function for vm-man
-# complete -F _vm_man_complete vm-man
