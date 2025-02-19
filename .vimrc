@@ -16,7 +16,11 @@ set relativenumber
 " status bar
 set laststatus=2
 
+" set statusline with right-aligned line numbers
+set statusline=%F%=\ [%l/%L]
+
 " call the .vimrc.plug file
 if filereadable(expand("~/.vimrc.plug"))
 	source ~/.vimrc.plug
 endif
+
