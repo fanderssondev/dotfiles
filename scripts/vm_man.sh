@@ -7,9 +7,6 @@ GREEN="\e[32m"
 RED="\e[31m"
 RESET="\e[0m"
 
-# Define the list of all VMs
-ALL_VMS=("rocky8a" "rocky8b" "rocky8c" "ubuntu24a")
-
 # Check if at least two arguments are provided
 if [ $# -lt 2 ]; then
     echo -e "${RED}Usage: $0 {up|down} {all | vm_name1 [vm_name2 ...]}${RESET}"
@@ -55,7 +52,6 @@ if [ "$ACTION" == "up" ]; then
     start_virtualbox  # Ensure VirtualBox is running
 
     for VM in "${VMS_TO_PROCESS[@]}"; do
-        if [[ " ${ALL_VMS[*]} " =~ " ${VM} " ]]; then
             echo "Starting VM: $VM"
             if VBoxManage startvm "$VM" --type headless >/dev/null 2>&1; then
                 echo -e "${GREEN}VM \"$VM\" has been successfully started.${RESET}"
@@ -63,9 +59,6 @@ if [ "$ACTION" == "up" ]; then
                 echo -e "${RED}Failed to start VM \"$VM\". Check VirtualBox logs for details.${RESET}"
             fi
             sleep 2  # Small delay between starting VMs
-        else
-            echo -e "${RED}Warning: VM '$VM' is not in the predefined list.${RESET}"
-        fi
     done
 
 # Handle 'down' (shut down VMs)
