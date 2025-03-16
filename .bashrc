@@ -143,6 +143,9 @@ source "$OSH"/oh-my-bash.sh
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
 
+
+
+# ====================================================================
 # fa - config ========================================================
 #
 # Set the keyboard repeat delay
@@ -150,18 +153,24 @@ xset r rate 190 40
 
 # aliases ============================================================
 
-# ~/scripts/vm_man.sh script
+# ~/scripts/vm_man.sh
 alias vm-man="~/scripts/vm_man.sh"
+
 # change ll command
 alias ll="ls -lh"
+
 # get repeat delay
 alias grd="xset -q | grep delay"
+
 # set repeat delay
 alias srd="xset r rate 190 40"  
+
 # copy output to clipboard
 alias clip="xclip -selection clipboard"
+
 # list custom keybindings
 alias cbind="dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/"
+
 # dotfiles git repo
 alias config='/usr/bin/git --git-dir=/home/fredrik/.dotfiles/ --work-tree=/home/fredrik'
 
