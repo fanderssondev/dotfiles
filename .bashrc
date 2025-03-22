@@ -159,11 +159,16 @@ alias vm-man="~/scripts/vm_man.sh"
 # change ll command
 alias ll="ls -lh"
 
-# get repeat delay
+# keyboard repeat delay
 alias grd="xset -q | grep delay"
-
-# set repeat delay
 alias srd="xset r rate 190 40"  
+
+# apt package manage
+alias aptup="sudo apt update && sudo apt dist-upgrade"
+alias aptall="sudo apt update && sudo apt dist-upgrade && sudo apt autoremove"
+alias aptupd="sudo apt update"
+alias aptupg="sudo apt dist-upgrade"
+alias aptaut="sudo apt autoremove"
 
 # copy output to clipboard
 alias clip="xclip -selection clipboard"
