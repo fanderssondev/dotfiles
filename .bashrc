@@ -170,6 +170,16 @@ alias aptupd="sudo apt update"
 alias aptupg="sudo apt dist-upgrade"
 alias aptaut="sudo apt autoremove"
 
+# change directory
+alias ..="cd .."
+alias ...="cd ../../"
+alias ....="cd ../../../"
+alias .....="cd ../../../../"
+alias .2="cd ../../"
+alias .3="cd ../../../"
+alias .4="cd ../../../../"
+alias .5="cd ../../../../../"
+
 # copy output to clipboard
 alias clip="xclip -selection clipboard"
 
