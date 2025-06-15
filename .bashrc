@@ -173,6 +173,11 @@ alias .3="cd ../../../"
 alias .4="cd ../../../../"
 alias .5="cd ../../../../../"
 
+# dnf
+alias dnfall="sudo dnf update && sudo dnf autoremove"
+alias dnfupt="sudo dnf update"
+alias dnfaut="sudo dnf autoremove"
+
 # copy output to clipboard
 alias clip="xclip -selection clipboard"
 
