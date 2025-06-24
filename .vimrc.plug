@@ -6,4 +6,7 @@ Plug 'ekalinin/dockerfile.vim'
 " ansible extension
 Plug 'pearofducks/ansible-vim'
 
+" python extension
+Plug 'davidhalter/jedi-vim'
+
 call plug#end()
