@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -156,7 +156,38 @@ alias cbind="dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-key
 # dotfiles git repo
 alias config='/usr/bin/git --git-dir=/home/fredrik/.dotfiles/ --work-tree=/home/fredrik'
 
+# vlc
 
+# add last_file argument to vlc to be able to get last used file
+# Load zsh completion system
+autoload -Uz compinit
+compinit
+
+# Define vlc wrapper
+_vlc_wrapper() {
+  if [[ "$1" == "last_file" ]]; then
+    grep '^list=' ~/.config/vlc/vlc-qt-interface.conf | \
+      sed 's/^list=//' | cut -d',' -f1 | \
+      sed 's/^file:\/\///; s/%20/ /g' | \
+      awk -F'/' '{print $NF}'
+  else
+    command vlc "$@"
+  fi
+}
+functions -c _vlc_wrapper vlc
+
+# Clear default binary completion for vlc
+compdef -d vlc
+
+# Custom completion for our function
+_vlc_custom() {
+  if [[ ${words[2]} == last_file ]]; then
+    compadd last_file
+  else
+    _files
+  fi
+}
+compdef _vlc_custom vlc
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
