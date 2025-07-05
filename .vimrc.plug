@@ -9,4 +9,13 @@ Plug 'pearofducks/ansible-vim'
 " python extension
 Plug 'davidhalter/jedi-vim'
 
+" enables surround commands
+Plug 'tpope/vim-surround'
+
+" enables repeat for plugins
+Plug 'tpope/vim-repeat'
+
+" comment out a line
+Plug 'tpope/vim-commentary'
+
 call plug#end()
