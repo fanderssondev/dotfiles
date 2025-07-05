@@ -27,3 +27,14 @@ set laststatus=2
 if filereadable(expand("~/.vimrc.plug"))
 	source ~/.vimrc.plug
 endif
+
+" bash header template
+autocmd BufNewFile *.sh 0r ~/.vim/templates/bash_template.sh
+autocmd BufNewFile *.sh call SetTemplateDate()
+autocmd BufNewFile *.sh normal G
+
+function! SetTemplateDate()
+    " Replace <DATE> with today's date
+    execute '%s/<DATE>/'.strftime("%Y-%m-%d").'/'
+endfunction
+

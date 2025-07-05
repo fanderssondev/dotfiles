@@ -18,4 +18,10 @@ Plug 'tpope/vim-repeat'
 " comment out a line
 Plug 'tpope/vim-commentary'
 
+" adds color highlighting for color codes
+Plug 'ap/vim-css-color'
+
+" Gruvbox color theme
+Plug 'morhetz/gruvbox'
 call plug#end()
+
