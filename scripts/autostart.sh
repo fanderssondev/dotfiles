@@ -16,8 +16,14 @@
 # License: https://www.gitlab.com/dwt1/fzscripts
 # Contributors: Derek Taylor
 
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
 set -euo pipefail
 
+# The FMENU variable contains the 'fzf' command with our settings.
+# Note that the last setting is 'prompt' which is left empty.
+# You add the prompt when you invoke $FMENU. For example: $FMENU "my prompt"
 FMENU="fzf --header=$(basename "$0") \
           --layout=reverse \
           --exact \
@@ -103,7 +109,6 @@ If run without arguments, an interactive menu appears.
 EOF
 }
 
-# 🧠 Argument handling must come first
 while getopts "alrh" arg; do
   case "$arg" in
     a) addauto; listauto; exit 0 ;;
@@ -114,7 +119,6 @@ while getopts "alrh" arg; do
   esac
 done
 
-# 🎛 Interactive fallback if no options provided
 if [ $# -eq 0 ]; then
   options=(
     "Add a program to autostart"
