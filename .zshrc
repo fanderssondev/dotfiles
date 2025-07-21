@@ -171,11 +171,10 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # show date/time format in history
 export HISTTIMEFORMAT="%F %T "
 
-# create WIN home dir env
+# create WIN* dir env
 export WINHOME="/mnt/c/Users/fredrik.andersson"
-
-# create WINHOME\Downloads dir env
-export WINHOME_DOWNLOADS="/mnt/c/Users/fredrik.andersson/Downloads"
+export WINDOWNLOADS="/mnt/c/Users/fredrik.andersson/Downloads"
+export WINSCRIPTS="/mnt/c/Users/fredrik.andersson/scripts"
 
 # use Windows ssh-agent
 #alias ssh='ssh.exe'
