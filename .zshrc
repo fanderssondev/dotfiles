@@ -89,11 +89,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+ if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='vim'
+ else
+   export EDITOR='vim'
+ fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -123,8 +123,8 @@ xset r rate 190 40
 alias vm-man="~/scripts/vm_man.sh"
 
 # change ll command
-alias ll="ls -lh"
-alias la="ls -lAh"
+alias ll="ls -lh --group-directories-first"
+alias la="ls -lAh --group-directories-first"
 
 alias c="clear"
 
@@ -156,42 +156,29 @@ alias cbind="dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-key
 # dotfiles git repo
 alias config='/usr/bin/git --git-dir=/home/fredrik/.dotfiles/ --work-tree=/home/fredrik'
 
-# vlc
-
-# add last_file argument to vlc to be able to get last used file
-# Load zsh completion system
-autoload -Uz compinit
-compinit
-
-# Define vlc wrapper
-_vlc_wrapper() {
-  if [[ "$1" == "last_file" ]]; then
-    grep '^list=' ~/.config/vlc/vlc-qt-interface.conf | \
-      sed 's/^list=//' | cut -d',' -f1 | \
-      sed 's/^file:\/\///; s/%20/ /g' | \
-      awk -F'/' '{print $NF}'
-  else
-    command vlc "$@"
-  fi
-}
-functions -c _vlc_wrapper vlc
-
-# Clear default binary completion for vlc
-compdef -d vlc
-
-# Custom completion for our function
-_vlc_custom() {
-  if [[ ${words[2]} == last_file ]]; then
-    compadd last_file
-  else
-    _files
-  fi
-}
-compdef _vlc_custom vlc
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+setopt EXTENDED_HISTORY
+
+history-with-timestamps() {
+  fc -il 1 | while read -r line; do
+    if [[ "$line" == ":"* ]]; then
+      # Zsh stores history lines like: ": 1690572716:0;command here"
+      timestamp=${line%%:*}; timestamp=${line#*: }; timestamp=${timestamp%%:*}
+      rest=${line#*;}
+      datetime=$(date -d @"$timestamp" "+%Y-%m-%d %H:%M:%S")
+      printf "%s  %s\n" "$datetime" "$rest"
+    else
+      echo "$line"
+    fi
+  done
+}
+
+alias history="history-with-timestamps"
+alias h="history-with-timestamps"
+
