@@ -123,8 +123,12 @@ xset r rate 190 40
 alias vm-man="~/scripts/vm_man.sh"
 
 # change ll command
-alias ll="ls -lh --group-directories-first"
-alias la="ls -lAh --group-directories-first"
+# alias ll="ls -lh --group-directories-first"
+# alias la="ls -lAh --group-directories-first"
+
+# eza
+alias ll="eza -lho --group-directories-first"
+alias la="eza -laho --group-directories-first"
 
 alias c="clear"
 
