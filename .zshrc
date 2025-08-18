@@ -115,7 +115,13 @@ source $ZSH/oh-my-zsh.sh
 # fa - config ========================================================
 #
 
-# aliases ============================================================
+# 1Password
+export OP_SERVICE_ACCOUNT_TOKEN="$(< ~/.1p_sa_token_private)"
+
+alias opu="unset OP_SERVICE_ACCOUNT_TOKEN && eval \$(op signin)"
+alias opsa="export OP_SERVICE_ACCOUNT_TOKEN=$(< ~/.1p_sa_token_private)"
+alias ops="/home/fredrik/scripts/op_fzf.sh"
+
 
 # ~/scripts/vm_man.sh
 alias vm-man="~/scripts/vm_man.sh"
