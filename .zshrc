@@ -137,8 +137,8 @@ alias vm-man="~/scripts/vm_man.sh"
 # alias la="ls -lAh --group-directories-first"
 
 # eza
-alias ll="eza -lho --group-directories-first"
-alias la="eza -laho --group-directories-first"
+alias ll="eza -lgho --group-directories-first"
+alias la="eza -lgaho --group-directories-first"
 
 alias c="clear"
 
