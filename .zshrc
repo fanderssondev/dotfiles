@@ -127,8 +127,12 @@ alias ops="/home/fredrik/scripts/op_fzf.sh"
 alias vm-man="~/scripts/vm_man.sh"
 
 # change ll command
-alias ll="ls -lh"
-alias la="ls -lAh"
+#alias ll="ls -lh"
+#alias la="ls -lAh"
+
+# eza
+alias ll="eza -lgho --group-directories-first"
+alias la="eza -lgaho --group-directories-first"
 
 alias c="clear"
 
