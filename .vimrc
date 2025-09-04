@@ -26,4 +26,8 @@ set laststatus=2
 " call the .vimrc.plug file
 if filereadable(expand("~/.vimrc.plug"))
 	source ~/.vimrc.plug
+
+" CTRL+C to copy to windows clipboard
+vnoremap <C-c> :w !clip.exe<CR><CR>
+
 endif
