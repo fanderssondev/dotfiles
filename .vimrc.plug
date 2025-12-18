@@ -6,7 +6,22 @@ Plug 'ekalinin/dockerfile.vim'
 " ansible extension
 Plug 'pearofducks/ansible-vim'
 
-" jq extension
-Plug 'vito-c/jq.vim'
+" python extension
+Plug 'davidhalter/jedi-vim'
 
+" enables surround commands
+Plug 'tpope/vim-surround'
+
+" enables repeat for plugins
+Plug 'tpope/vim-repeat'
+
+" comment out a line
+Plug 'tpope/vim-commentary'
+
+" adds color highlighting for color codes
+Plug 'ap/vim-css-color'
+
+" Gruvbox color theme
+Plug 'morhetz/gruvbox'
 call plug#end()
+

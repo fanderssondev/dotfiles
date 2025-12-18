@@ -20,6 +20,10 @@ highlight CursorLineNr cterm=NONE gui=NONE ctermfg=White guifg=#FFFFFF
 set cursorline
 highlight CursorLine ctermbg=236 guibg=#303030 cterm=NONE gui=NONE
 
+
+" make comments green
+highlight Comment ctermfg=DarkGreen guifg=#689d6a cterm=italic gui=italic
+
 " status bar
 set laststatus=2
 
