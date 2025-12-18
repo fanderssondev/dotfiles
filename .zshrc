@@ -116,7 +116,7 @@ source $ZSH/oh-my-zsh.sh
 # ====================================================================
 
 # 1Password
-export OP_SERVICE_ACCOUNT_TOKEN="$(< ~/.1p_sa_token_private)"
+#export OP_SERVICE_ACCOUNT_TOKEN="$(< ~/.1p_sa_token_private)"
 
 alias opu="unset OP_SERVICE_ACCOUNT_TOKEN && eval \$(op signin)"
 alias opsa="export OP_SERVICE_ACCOUNT_TOKEN=$(< ~/.1p_sa_token_private)"
