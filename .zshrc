@@ -79,6 +79,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git python)
 
+export HIST_STAMPS="%F %T "
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -116,7 +118,7 @@ source $ZSH/oh-my-zsh.sh
 #
 
 # 1Password
-export OP_SERVICE_ACCOUNT_TOKEN="$(< ~/.1p_sa_token_private)"
+# export OP_SERVICE_ACCOUNT_TOKEN="$(< ~/.1p_sa_token_private)"
 
 alias opu="unset OP_SERVICE_ACCOUNT_TOKEN && eval \$(op signin)"
 alias opsa="export OP_SERVICE_ACCOUNT_TOKEN=$(< ~/.1p_sa_token_private)"
@@ -179,7 +181,7 @@ alias nee='/home/fredrik/scripts/email_new_employee.sh '
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # show date/time format in history
-export HISTTIMEFORMAT="%F %T "
+setopt EXTENDED_HISTORY
 
 # create WIN* dir env
 export WINHOME="/mnt/c/Users/fredrik.andersson"
