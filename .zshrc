@@ -158,7 +158,7 @@ alias .5="cd ../../../../../"
 
 # dnf
 alias dnfall="sudo dnf update && sudo dnf autoremove"
-alias dnfupd="sudo dnf update"
+alias dnfup="sudo dnf update"
 alias dnfaut="sudo dnf autoremove"
 
 # copy output to clipboard
