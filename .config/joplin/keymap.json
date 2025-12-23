@@ -1,0 +1,78 @@
+[
+  {
+    "keys": ["j", "DOWN"],
+    "type": "function",
+    "command": "move_down"
+  },
+  {
+    "keys": ["k", "UP"],
+    "type": "function",
+    "command": "move_up"
+  },
+  {
+    "keys": ["h", "LEFT", "SHIFT_TAB"],
+    "type": "function",
+    "command": "focus_previous"
+  },
+  {
+    "keys": ["l", "RIGHT", "TAB"],
+    "type": "function",
+    "command": "focus_next"
+  },
+  {
+    "keys": ["gg"],
+    "type": "function",
+    "command": "page_up"
+  },
+  {
+    "keys": ["G"],
+    "type": "function",
+    "command": "page_down"
+  },
+  {
+    "keys": ["dd"],
+    "type": "function",
+    "command": "delete"
+  },
+  {
+    "keys": ["/"],
+    "type": "function",
+    "command": "search"
+  },
+  {
+    "keys": ["n"],
+    "type": "function",
+    "command": "search_next"
+  },
+  {
+    "keys": ["N"],
+    "type": "function",
+    "command": "search_previous"
+  },
+  {
+    "keys": ["yy"],
+    "type": "function",
+    "command": "cp"
+  },
+  {
+    "keys": ["p"],
+    "type": "function",
+    "command": "open_link"
+  },
+  {
+    "keys": [":"],
+    "type": "function",
+    "command": "enter_command_line_mode"
+  },
+  {
+    "keys": ["wq", "ZZ"],
+    "type": "exec",
+    "command": "exit"
+  },
+  {
+  "keys": ["ENTER"],
+  "type": "function",
+  "command": "activate"
+  }
+]
+
