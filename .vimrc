@@ -25,6 +25,7 @@ highlight Comment ctermfg=Green guifg=#b8bb26
 
 " status bar
 set laststatus=2
+set statusline=%f\ %h%w%m%r\ %=%(%l,%c%V\ %=\ %P%)\ [%L]
 
 " call the .vimrc.plug file
 if filereadable(expand("~/.vimrc.plug"))
