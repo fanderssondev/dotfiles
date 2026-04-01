@@ -7,6 +7,7 @@ fi
 
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH="$PATH:$(go env GOPATH)/bin"
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -118,7 +119,7 @@ source $ZSH/oh-my-zsh.sh
 #
 
 # 1Password
-# export OP_SERVICE_ACCOUNT_TOKEN="$(< ~/.1p_sa_token_private)"
+#export OP_SERVICE_ACCOUNT_TOKEN="$(< ~/.1p_sa_token_private)"
 
 export EDITOR='vim'
 export VISUAL='vim'
@@ -165,6 +166,9 @@ alias clip='xclip -sel clip -r'
 # clear the terminal
 alias c='clear'
 
+# batcat
+alias bat="batcat"
+
 # apt
 alias aptall="sudo apt update && sudo apt dist-upgrade && sudo apt autoremove"
 alias aptupd="sudo apt update"
@@ -174,8 +178,9 @@ alias aptaut="sudo apt autoremove"
 # history
 alias h='history'
 
-# ~/scripts/vm_man.sh script
-alias vm-man="~/scripts/vm_man.sh"
+# python env
+alias uva='source .venv/bin/activate'
+alias uvd='deactivate'
 
 # email script
 alias nee='/home/fredrik/scripts/email_new_employee.sh '
@@ -190,6 +195,12 @@ setopt EXTENDED_HISTORY
 export WINHOME="/mnt/c/Users/fredrik.andersson"
 export WINDOWNLOADS="/mnt/c/Users/fredrik.andersson/Downloads"
 export WINSCRIPTS="/mnt/c/Users/fredrik.andersson/scripts"
+
+# export GITHUB_PERSONAL_ACCESS_TOKEN="$(op read 'op://Employee/Github/claude_access_token')"
+
+claude() {
+  GITHUB_PERSONAL_ACCESS_TOKEN="$(op read 'op://Employee/Github/claude_access_token')" /home/fredrik/.local/bin/claude "$@"
+}
 
 # use Windows ssh-agent
 #alias ssh='ssh.exe'
