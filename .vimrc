@@ -24,6 +24,10 @@ highlight CursorLine ctermbg=236 guibg=#303030 cterm=NONE gui=NONE
 " make comments green
 highlight Comment ctermfg=DarkGreen guifg=#689d6a cterm=italic gui=italic
 
+" indentation for bash scripts
+filetype plugin indent on
+autocmd FileType sh,bash setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+
 " status bar
 set laststatus=2
 
