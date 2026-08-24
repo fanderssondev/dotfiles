@@ -137,8 +137,8 @@ alias vm-man="~/scripts/vm_man.sh"
 #alias la="ls -lAh"
 
 # eza
-alias ll="eza -lgho --group-directories-first --git"
-alias la="eza -lgaho --group-directories-first --git"
+alias ll="eza -lghob --group-directories-first --git"
+alias la="eza -lgahob --group-directories-first --git"
 
 alias c="clear"
 
@@ -209,6 +209,8 @@ claude() {
 # 1Password alias
 alias op="/mnt/c/Windows/op.exe"
 
+# Intellij
+alias idea='/opt/idea-IU-*/bin/idea.sh > /dev/null 2>&1 &'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
