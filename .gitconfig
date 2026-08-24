@@ -3,3 +3,5 @@
 	email = fredrikanderssondev@gmail.com
 [init]
 	defaultBranch = master
+[pager]
+	branch = false
